@@ -1,3 +1,3 @@
 # CALCULATOR PROJECT
 
-### [CHECK THIS BABY OUT](danieledefoe.github.io/calculator)
+### [CHECK THIS BABY OUT](https://danieledefoe.github.io/Calculator/)
