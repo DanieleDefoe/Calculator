@@ -3,6 +3,7 @@ const clear = document.querySelector('.clear');
 const del = document.querySelector('.delete');
 
 const printChar = (e) => {
+    e.target.blur();
     let character = e.target.getAttribute('accesskey');
     if (!character) {
         character = e.key;
