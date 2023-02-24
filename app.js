@@ -7,11 +7,12 @@ const printChar = (e) => {
     if (!character) {
         character = e.key;
     }
-    if (!/\d|[*\-+=\/]/.test(character)) return;
+    if (!/\d|[*\-+=\/]|Enter/.test(character)) return;
     if (input.value === '0' && character !== '.' && !/\W/.test(character)) input.value = '';
     if (character === '.' && input.value.includes('.')) return;
     if (input.value === '' && /\W/.test(character)) return;
     if (/\W/.test(character) && /\W/.test(input.value[input.value.length - 1])) return;
+    if (/[*+\-\/]/.test(input.value[input.value.length - 1]) && (character === 'Enter' || character === '=')) return;
     if (character === '=' || character === 'Enter') {
         if (input.value === '') return;
         input.value = eval(input.value);
