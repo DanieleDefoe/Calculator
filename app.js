@@ -4,8 +4,10 @@ const del = document.querySelector('.delete');
 
 const printChar = (e) => {
     if (e.key === 'c') input.value = '';
-    if (e.key === 'Delete') input.value = input.value.slice(0, input.value.length - 1);
-    e.target.blur();
+    if (e.key === 'Delete') deleteChar(e);
+    if (e.target.className === 'operation') {
+        e.target.blur();    
+    }
     e.stopPropagation();
     let character = e.target.getAttribute('accesskey');
     if (!character) {
@@ -19,10 +21,15 @@ const printChar = (e) => {
     if (/[*+\-\/\.]/.test(input.value[input.value.length - 1]) && (character === 'Enter' || character === '=')) return;
     if (character === '=' || character === 'Enter') {
         if (input.value === '') return;
+        try {
+            eval(input.value);
+        } catch (e) {
+            return;
+        }
         input.value = eval(input.value);
         return;
     }
-    input.value += character;
+    if (e.target.name !== 'result') input.value += character;  
 };
 
 const operations = document.querySelectorAll('.operation');
@@ -30,12 +37,14 @@ operations.forEach((operation) => {
     operation.addEventListener('click', printChar);
 });
 
-const clearInput = () => {
+const clearInput = (e) => {
     input.value = '';
+    e.target.blur();
 };
 
-const deleteChar = () => {
+const deleteChar = (e) => {
     input.value = input.value.substr(0, input.value.length - 1);
+    e.target.blur();
 }
 
 clear.addEventListener('click', clearInput);
