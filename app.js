@@ -32,6 +32,7 @@ const printChar = (e) => {
         if (input.value.includes('^')) {
             input.value = input.value.replace(/\^/g, '**');
         }
+        if (/[a-z]/i.test(input.value)) return;
         try {
             eval(input.value);
         } catch (e) {
