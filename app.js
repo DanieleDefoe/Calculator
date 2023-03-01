@@ -3,24 +3,31 @@ const clear = document.querySelector('.clear');
 const del = document.querySelector('.delete');
 
 const printChar = (e) => {
-    if (e.key === 'c') input.value = '';
-    if (e.key === 'Delete') deleteChar(e);
-    if (e.target.className === 'operation') {
-        e.target.blur();    
-    }
     e.stopPropagation();
     let character = e.target.getAttribute('accesskey');
     if (!character) {
         character = e.key;
     }
-    if (!/\d|[*\-+=\/\.]|Enter/.test(character)) return;
-    if (input.value === '0' && character !== '.' && !/\W/.test(character)) input.value = '';
-    if (character === '.' && input.value.includes('.')) return;
-    if (input.value === '' && /\W/.test(character)) return;
-    if (/\W/.test(character) && /\W/.test(input.value[input.value.length - 1])) return;
-    if (/[*+\-\/\.]/.test(input.value[input.value.length - 1]) && (character === 'Enter' || character === '=')) return;
+    if (/c/i.test(character)) {
+        input.value = '';
+        return;
+    }
+    if (character === 'Delete') {
+        deleteChar(e);
+        return;
+    }
+    if (input.value === '0' && character !== '.' && !/\W/.test(character)) {
+        input.value = '';
+    }
+    if (e.target.className === 'operation') {
+        e.target.blur();
+    }
+    if (input.value.includes('**')) {
+        input.value = input.value.replace('**', '^');
+    }
     if (character === '=' || character === 'Enter') {
         if (input.value === '') return;
+        if (input.value.includes('^')) input.value = input.value.replace(/\^/g, '**');
         try {
             eval(input.value);
         } catch (e) {
@@ -29,7 +36,9 @@ const printChar = (e) => {
         input.value = eval(input.value);
         return;
     }
-    if (e.target.name !== 'result') input.value += character;  
+    if (e.target.name !== 'result') {
+        input.value += character;
+    }
 };
 
 const operations = document.querySelectorAll('.operation');
