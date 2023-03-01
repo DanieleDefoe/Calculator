@@ -26,8 +26,12 @@ const printChar = (e) => {
         input.value = input.value.replace('**', '^');
     }
     if (character === '=' || character === 'Enter') {
-        if (input.value === '') return;
-        if (input.value.includes('^')) input.value = input.value.replace(/\^/g, '**');
+        if (input.value === '') {
+            return;
+        }
+        if (input.value.includes('^')) {
+            input.value = input.value.replace(/\^/g, '**');
+        }
         try {
             eval(input.value);
         } catch (e) {
